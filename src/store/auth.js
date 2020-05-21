@@ -32,14 +32,21 @@ export const auth = {
 
     actions: {
         async login({ commit }, credentials) {
-            /* eslint-disable no-debugger */
-            debugger
-            const res = await axios.post("http://localhost:3003/auth/login", credentials);
-            const token = await res.data;
+            try {
+                const res = await axios.post("/auth/login", credentials, {
+                    baseURL: 'http://localhost:3003'
+                });
+    
+                const token = res.data;
+    
+                sessionStorage.setItem('access_token', token);
+    
+                commit(LOGIN_SUCCESS, token);
+            } catch (err) {
+                console.log('err', err.response)
+                throw new Error(err.response.data.message)
+            }
 
-            sessionStorage.setItem('access_token', token);
-
-            commit(LOGIN_SUCCESS, token);
         },
 
         async logout({ commit }) {

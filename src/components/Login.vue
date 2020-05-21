@@ -81,9 +81,8 @@ export default {
                     login: this.login,
                     password: this.password
                 }
-                /* eslint-disable no-debugger */
-                debugger
-                this.authorizeUser(user)
+
+                    this.authorizeUser(user)
                     .then(() => this.$router.push("/tasks"))
                     .catch((e) => this.errorMessage = e.message)
 

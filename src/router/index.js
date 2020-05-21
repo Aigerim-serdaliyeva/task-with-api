@@ -51,7 +51,7 @@ export const router = new VueRouter({
 
         {
             path: '/tasks/details/:id',
-            name: 'tasks',
+            name: 'details',
             component: () => import('../components/task/AllTasks.vue')
         }
 
