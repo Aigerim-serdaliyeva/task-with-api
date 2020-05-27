@@ -59,6 +59,7 @@ export const router = new VueRouter({
         {
             path: '/tasks/details/:id',
             name: 'details',
+            meta: {isTaskPage: true},
             component: () => import('../components/task/TaskDetails.vue')
         },
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="card" style="width: 18rem; margin-bottom: 20px">
+    <div class="card" style=" margin-bottom: 20px">
         <div class="card-body">
             <h5 class="card-title">{{ title }}</h5>
             <p class="card-text">{{ getSeventySymbolText }}</p>
@@ -17,7 +17,6 @@
 <script>
 export default {
     props: {
-
         title: {
             type: String,
             default: ''

@@ -29,6 +29,8 @@ export const task = {
 
     actions: {
         async fetchTasks({commit}) {
+            // /* eslint-disable no-debugger */
+            // debugger
             try {
                 const tasks = await axios.get('/tasks')
                 commit(SET_TASKS, tasks)

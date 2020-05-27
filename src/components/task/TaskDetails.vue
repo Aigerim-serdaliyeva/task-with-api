@@ -85,3 +85,28 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.th {
+    width: 250px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 250px;
+    width: 100%;
+    margin: 50px 0 0 auto;
+}
+
+.item-value {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+    .th {
+        width: 120px;
+    }
+}
+</style>

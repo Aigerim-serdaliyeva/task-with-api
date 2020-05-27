@@ -12,7 +12,7 @@ export const auth = {
 
     getters: {
         accessToken: ({ accessToken }) => {
-            if(accessToken === "undefined" || accessToken === null) {
+            if(accessToken === "undefined" || !accessToken) {
                 return false
             } else {
                 return accessToken
@@ -43,15 +43,10 @@ export const auth = {
             }
         },
 
-        async register({ commit }, credentials ) {
+        async register( context, credentials ) {
             try {
-                const res = await axios.post("/auth/register", credentials);
-                const token = await res.data;
-
-                sessionStorage.setItem('access_token', token);
-                commit(LOGIN_SUCCESS, token)
+                await axios.post("/auth/register", credentials);
             } catch (err) {
-                console.log('store error', err)
                 throw new Error(err.response.data.message)
             }
         },

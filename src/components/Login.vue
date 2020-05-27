@@ -82,7 +82,7 @@ export default {
                     password: this.password
                 }
 
-                    this.authorizeUser(user)
+                this.authorizeUser(user)
                     .then(() => this.$router.push("/tasks"))
                     .catch((e) => this.errorMessage = e.message)
 
