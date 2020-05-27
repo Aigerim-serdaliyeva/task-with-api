@@ -7,6 +7,9 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import 'bootstrap';
 import './validate';
 
+// Axios middleware
+import "./plugins/axios";
+
 Vue.config.productionTip = false
 import './assets/scss/main.scss'
 

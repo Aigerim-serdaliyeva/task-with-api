@@ -8,7 +8,7 @@
                 <a class="navbar-brand" href="/">Todo</a>
 
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0" v-if="accessToken">
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" :class="{ active: isTaskPage }" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,7 +34,7 @@
                         </router-link>
                     </ul>
 
-                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0" v-else>
                         <router-link
                             to="/login"
                             v-slot="{ href, route, navigate, isExactActive }"
@@ -60,9 +60,9 @@
                         </router-link>
                     </ul>
 
-                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0" v-if="accessToken">
                         <li>
-                            <a href="#" @click.prevent="logout" class="nav-link">Выйти</a>
+                            <a href="#" @click.prevent="onLogout" class="nav-link">Выйти</a>
                         </li>
                     </ul>
                 </div>
@@ -72,19 +72,28 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     computed: {
         isTaskPage() {
             return this.$route.meta.isTaskPage
-        }
+        },
+
+        ...mapGetters({
+            accessToken: "auth/accessToken"
+        })
     },
 
     methods: {
         ...mapActions({
             logout: "auth/logout"
-        })
+        }),
+
+        onLogout() {
+            this.logout()
+            this.$router.push('/login')
+        }
     }
 }
 </script>

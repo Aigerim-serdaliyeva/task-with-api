@@ -100,10 +100,20 @@ export default {
                     return;
                 }
 
+                const data = {
+                    title: this.title,
+                    text: this.text,
+                    duration: Number(this.duration)
+                }
+
+                this.$emit('onSave', data);
+
                 this.title = this.text = this.duration = '';
 
                 this.$nextTick(() => {
-                    this.$refs.form.reset();
+                    if(this.$refs.form) {
+                        this.$refs.form.reset();
+                    }
                 })
             })
         }

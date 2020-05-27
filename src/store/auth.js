@@ -33,20 +33,27 @@ export const auth = {
     actions: {
         async login({ commit }, credentials) {
             try {
-                const res = await axios.post("/auth/login", credentials, {
-                    baseURL: 'http://localhost:3003'
-                });
-    
-                const token = res.data;
+                const token = await axios.post("/auth/login", credentials);
     
                 sessionStorage.setItem('access_token', token);
     
                 commit(LOGIN_SUCCESS, token);
             } catch (err) {
-                console.log('err', err.response)
                 throw new Error(err.response.data.message)
             }
+        },
 
+        async register({ commit }, credentials ) {
+            try {
+                const res = await axios.post("/auth/register", credentials);
+                const token = await res.data;
+
+                sessionStorage.setItem('access_token', token);
+                commit(LOGIN_SUCCESS, token)
+            } catch (err) {
+                console.log('store error', err)
+                throw new Error(err.response.data.message)
+            }
         },
 
         async logout({ commit }) {

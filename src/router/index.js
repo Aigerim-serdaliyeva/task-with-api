@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import { store } from '../store'
+
 Vue.use(VueRouter)
 
 export const router = new VueRouter({
@@ -20,6 +22,11 @@ export const router = new VueRouter({
             path: '/login',
             name: 'login',
             component: () => import('../components/Login.vue')
+        },
+
+        {
+            path: '/',
+            redirect: '/tasks'
         },
 
         {
@@ -52,9 +59,26 @@ export const router = new VueRouter({
         {
             path: '/tasks/details/:id',
             name: 'details',
-            component: () => import('../components/task/AllTasks.vue')
+            component: () => import('../components/task/TaskDetails.vue')
+        },
+
+        {
+            path: '/tasks/edit/:id',
+            name: 'edit',
+            component: () => import('../components/task/TaskEdit.vue')
         }
 
 
     ]
 }) 
+
+router.beforeEach((to, from, next) => {
+    const accessToken = store.getters["auth/accessToken"];
+    if (
+        to.name === 'login' || 
+        to.name === 'registration'
+    ) {
+        return accessToken ? next('/') : next();
+    }
+    return accessToken ? next() : next('/login')
+})

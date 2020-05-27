@@ -61,28 +61,54 @@
                     </button>
                 </form>
             </ValidationObserver>
+
+            <div class="alert alert-success" role="alert" v-if="isSuccess">
+                Пользователь добавлен. Перейдите по 
+                <router-link to="/login" class="alert-link">ссылке</router-link> 
+                чтобы авторизоваться.
+            </div>
+
+            <div class="alert alert-danger" role="alert" v-if="errorMessage"> 
+                {{ errorMessage }}
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
     data() {
         return {
             login: '',
             password: '',
-            confirm: ''
+            confirm: '',
+            errorMessage: '',
+            isSuccess: false
         }
     },
 
     methods: {
+        ...mapActions({
+            register: 'auth/register'
+        }),
+
         onSubmit() {
             this.$refs.form.validate().then(success => {
                 if(!success) {
                     return;
                 }
 
-                this.login = this.password = this.confirm = '';
+                const user = {
+                    login: this.login,
+                    password: this.password
+                }
+
+                this.register(user)
+                    .then(() => this.isSuccess = true)
+                    .catch((e) => this.errorMessage = e.message)
+
+                this.login = this.password = this.confirm = this.errorMessage = '';
 
                 this.$nextTick(() => {
                     this.$refs.form.reset();

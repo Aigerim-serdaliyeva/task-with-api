@@ -1,11 +1,12 @@
 <template>
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card" style="width: 18rem; margin-bottom: 20px">
         <div class="card-body">
             <h5 class="card-title">{{ title }}</h5>
-            <p class="card-text">{{ text }}</p>
+            <p class="card-text">{{ getSeventySymbolText }}</p>
             <router-link 
-                class="btn btn-primary"
+                :to="{ name: 'details', params: { id: id } }"
+                tag="button" 
+                class="btn btn-outline-primary" 
             >
                 Просмотреть
             </router-link>
@@ -16,6 +17,7 @@
 <script>
 export default {
     props: {
+
         title: {
             type: String,
             default: ''
@@ -24,6 +26,18 @@ export default {
         text: {
             type: String,
             default: ''
+        },
+
+        id: {
+            type: Number
+        }
+    },
+    computed: {
+        getSeventySymbolText() {
+            if(this.text.length > 70) {
+                return this.text.slice(0, 70) + '...'
+            }
+            return this.text
         }
     }
 }
